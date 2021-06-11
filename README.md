@@ -9,7 +9,7 @@ ssid: RaspberryBeweegtest
 passwd: raspberry
 
 Connect to ssh of raspberry:
-'''
+```
 ssh pi@(ip of pi)
-'''
+```
 Password for ssh  = raspberry 
