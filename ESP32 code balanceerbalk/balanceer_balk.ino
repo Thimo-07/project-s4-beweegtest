@@ -38,16 +38,14 @@ void setup() {
 
 
 void loop() {
-  //Serial.println("test1");
   if(!mqtt_object.check_connected()){
     mqtt_object.reconnect("Balktest1");
   }
-  //Serial.println("test2");
   mqtt_object.pollmessage();
+  
+  test.run();
   delay(1000);
-  if(test.run()){
-    //Serial.println("test");
-  }
+    
   if((test.get_score() != -1) && send_flag==0){
     mqtt_object.Publish_score(test.get_score(), mqtt_topic);
     send_flag= 1;
