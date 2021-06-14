@@ -13,42 +13,43 @@ last edited by: Thimo Meeusen
 #include "config.hpp"
 #include "mqtt.hpp"
 #include "sensorread.hpp"
+#include "balk_test.hpp"
 
 
-char mqtt_SSID[] = "RaspberryMarijn";
-char mqtt_pasword[] = "thimoisgek";
+char mqtt_SSID[] = "MobielThimo";
+char mqtt_pasword[] = "Bookshelf";
 char mqtt_topic[] = "balanceerbalk/balk_1";
-char mqtt_server[] = "192.168.4.1";
+char mqtt_server[] = "192.168.146.209";
 char mqtt_client_name[] = "balanceertest";
+int send_flag= 0;
 
 // SSID and password used for the softap setup by the raspberry pi for mqtt
 
 
 mqtt_handler mqtt_object(mqtt_SSID, mqtt_pasword, mqtt_server, mqtt_topic);
-sensor_read sensor;
-int sensor_data[aantal_koperbanen];
+balk_test test;
 
 void setup() {
   Serial.begin(115200);
   pinMode(15, OUTPUT);
   digitalWrite(15, LOW);
+  test.start();
 }
 
 
 void loop() {
-  //if(!mqtt_object.check_connected()){
-  //  mqtt_object.reconnect("Balktest1");
-  //}
-  //mqtt_object.pollmessage();
-  //Serial.println(mqtt_object.get_received_command());
- sensor.read_data(sensor_data);
-  for(int i=0; i < aantal_koperbanen; i++){
-    
-    Serial.print("koperbaan ");
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.println(sensor_data[i]);
+  //Serial.println("test1");
+  if(!mqtt_object.check_connected()){
+    mqtt_object.reconnect("Balktest1");
   }
-  //mqtt_object.Publish_score(8,mqtt_topic);
-  delay(2000);
+  //Serial.println("test2");
+  mqtt_object.pollmessage();
+  delay(1000);
+  if(test.run()){
+    //Serial.println("test");
+  }
+  if((test.get_score() != -1) && send_flag==0){
+    mqtt_object.Publish_score(test.get_score(), mqtt_topic);
+    send_flag= 1;
+  }
 }

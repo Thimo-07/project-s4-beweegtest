@@ -20,6 +20,7 @@ class balk_test{
   int get_score();
   
   private:
+  bool old_bool_data[aantal_koperbanen];
   sensor_read *sensor;
   int score;
   bool running = false;

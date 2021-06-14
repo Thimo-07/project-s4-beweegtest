@@ -10,6 +10,7 @@ last edited by: Thimo Meeusen
 #define config_h
 
 #define aantal_koperbanen 23
+#define sensor_threshold 700
 
 //pinout mux 
 #define mux1_s0_pin 5
