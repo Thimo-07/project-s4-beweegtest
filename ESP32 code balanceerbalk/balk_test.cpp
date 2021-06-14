@@ -47,16 +47,12 @@ bool balk_test::run(){
       else{
         new_bool_data[i] = 0;
       }
-      //Serial.print(i);
-      //Serial.print(": ");
-      //Serial.println(new_bool_data[i]);
     }
     
     if(user_started_test){
       bool stop_running = true;
       for(int i=0; i<aantal_koperbanen; i++){
         if(new_bool_data[i] == 1){
-          //Serial.println("still running");
           stop_running = false;
         }
 
@@ -74,8 +70,6 @@ bool balk_test::run(){
             for(int i=0; i < aantal_koperbanen; i++){
               old_bool_data[i] = new_bool_data[i];
             }
-            Serial.print("score:");
-            Serial.println(score);
             if(score == 8){
               running = false;
               return false;
@@ -87,9 +81,6 @@ bool balk_test::run(){
       }
       
     }
-    //if user_started_test
-    //check if user is still on balk
-    //check for next step
     else{
       if((new_bool_data[0] != old_bool_data[0]) || (new_bool_data[1] != old_bool_data[1]) ){
         user_started_test = 1;
